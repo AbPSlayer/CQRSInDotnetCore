@@ -2,8 +2,11 @@
 using CQRSTest.Domain;
 using CQRSTest.DTOs;
 using CQRSTest.Validation;
+
 using MediatR;
+
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +16,26 @@ namespace CQRSTest.Commands
     public static class AddTodo
     {
         // Command
-        public record Command(string Name) : IRequest<Response>;
+        public record Command : IRequest<Response>
+        {
+
+            public string Name { get; set; }
+            public ToDoType Type { get; set; }
+            public IEnumerable<ToDoUser> Owners { get; set; }
+        }
+
+        public record ToDoType
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+
+        }
+        public record ToDoUser
+        {
+            public int Id { get; set; }
+            public string Employee { get; set; }
+        }
+
 
         // Validator
         // Handles all DOMAIN validation
